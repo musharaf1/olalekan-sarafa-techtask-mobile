@@ -4,5 +4,5 @@ class ViewRoutes {
 
   static const splash = 'splash';
   static const ingredient = 'ingredient-screen';
-  static const recipe = 'ingredient-screen';
+  static const recipe = 'recipe-screen';
 }

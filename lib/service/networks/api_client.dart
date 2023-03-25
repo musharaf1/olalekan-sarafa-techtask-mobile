@@ -25,8 +25,7 @@ class ApiClient extends BaseProviderModel {
         final List<dynamic> data = response.data;
         final List<RecipeModel> recipes =
             data.map((e) => RecipeModel.fromJson(e)).toList();
-        print(
-            "<=========================  recipes:  {recipes}      ===========================>");
+        print(recipes);
 
         return recipes;
       }
@@ -40,7 +39,6 @@ class ApiClient extends BaseProviderModel {
 
   Future<List<IngredientModel>> getIngredients() async {
     try {
-      setViewState(ViewState.BUSY);
       final response = await Dio().get('$baseUrl/ingredients');
       setViewState(ViewState.IDLE);
 

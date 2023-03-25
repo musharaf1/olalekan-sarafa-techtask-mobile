@@ -2,14 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:tech_task/locator.dart';
 import 'package:tech_task/models/ingredientModel/ingredients_model.dart';
 import 'package:tech_task/service/networks/api_client.dart';
+import '../../enums/ui_state_enum.dart';
 import '../../models/baseProviderModel/base_provider_model.dart';
 
 class IngredientScreenViewModel extends BaseProviderModel {
   final _apiClient = myLocator<ApiClient>();
 
-  List<IngredientModel> chosenIngredients = [
-    IngredientModel(title: 'test', useBy: 'test')
-  ];
+  List<IngredientModel> chosenIngredients = [];
 
   List<IngredientModel> _ingredients = [];
 
@@ -25,7 +24,7 @@ class IngredientScreenViewModel extends BaseProviderModel {
     return now.isAfter(useByDate) || now.isAtSameMomentAs(useByDate);
   }
 
-  DateTime lunchDate;
+  var lunchDate;
 
   // Function to handle the submission of the lunch date form
   void handleSubmit() async {
@@ -34,18 +33,21 @@ class IngredientScreenViewModel extends BaseProviderModel {
         ? DateTime.now()
         : DateTime.parse(_dateController.text);
 
-    lunchDate = date;
+    lunchDate = date.toString().split(" ").first.toString();
     print(lunchDate);
 
+    chosenIngredients = [];
+    setViewState(ViewState.BUSY);
+
     _ingredients = await _apiClient.getIngredients();
-    notifyListeners();
-    print(_ingredients.first.title);
+    setViewState(ViewState.IDLE);
   }
 
   void handleUnchanged(IngredientModel ingredient, bool value) {
-    if (value && !isIngredientExpired(ingredient)) {
+    if (value) {
       chosenIngredients.add(ingredient);
       print("adds ingredient");
+      print(chosenIngredients.length);
     } else {
       chosenIngredients.remove(ingredient);
       print("remove ingredient");
