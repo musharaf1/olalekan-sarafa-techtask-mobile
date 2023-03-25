@@ -9,12 +9,15 @@ class IngredientsScreen extends StatefulWidget {
   _IngredientsScreenState createState() => _IngredientsScreenState();
 }
 
+TextEditingController _dateController = TextEditingController();
+
 class _IngredientsScreenState extends State<IngredientsScreen> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return BaseViewModel<IngredientScreenViewModel>(
       providerReady: (provider) {
+        provider.getIngredients();
         provider.handleSubmit();
       },
       builder: (context, provider, child) {
@@ -61,7 +64,7 @@ class _IngredientsScreenState extends State<IngredientsScreen> {
                     Padding(
                       padding: const EdgeInsets.all(16.0),
                       child: TextFormField(
-                        controller: provider.dateController,
+                        controller: _dateController,
                         decoration: InputDecoration(
                             hintStyle: TextStyle(color: Colors.grey),
                             border: OutlineInputBorder(
@@ -80,7 +83,8 @@ class _IngredientsScreenState extends State<IngredientsScreen> {
                             fillColor: Colors.grey[200],
                             contentPadding: EdgeInsets.symmetric(
                                 vertical: 16.0, horizontal: 16.0),
-                            hintText: "Lunch Date: ${provider.lunchDate}"),
+                            hintText:
+                                "Lunch Date: ${provider.hintTextLunchDate}"),
                       ),
                     ),
 
@@ -95,7 +99,12 @@ class _IngredientsScreenState extends State<IngredientsScreen> {
                                     .contains(ingredient),
                                 onChanged: (value) {
                                   return provider.handleUnchanged(
-                                      ingredient, value);
+                                    ingredient,
+                                    value,
+                                    !(provider.isIngredientExpired(
+                                      ingredient,
+                                    )),
+                                  );
                                 },
                                 title: Text(
                                   ingredient.title,
@@ -107,9 +116,7 @@ class _IngredientsScreenState extends State<IngredientsScreen> {
                                 subtitle: Text(
                                   ingredient.useBy,
                                   style: TextStyle(fontSize: 16.0),
-                                )
-                                // value: false,
-                                ),
+                                )),
                           );
                         },
                       ),

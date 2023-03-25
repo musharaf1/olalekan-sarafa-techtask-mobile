@@ -24,7 +24,20 @@ class IngredientScreenViewModel extends BaseProviderModel {
     return now.isAfter(useByDate) || now.isAtSameMomentAs(useByDate);
   }
 
-  var lunchDate;
+  // bool isIngredientExpired(IngredientModel ingredient, {String lunchTime}) {
+  //   final now = DateTime.now();
+  //   final useByDate = DateTime.parse(ingredient.useBy);
+  //   // final _lunchTime = DateTime.parse(lunchTime);
+
+  //   if (lunchTime != null) {
+  //     return _lunchTime.isAfter(useByDate) ||
+  //         _lunchTime.isAtSameMomentAs(useByDate);
+  //   }
+
+  //   return now.isAfter(useByDate) || now.isAtSameMomentAs(useByDate);
+  // }
+
+  var hintTextLunchDate, lunchDate;
 
   // Function to handle the submission of the lunch date form
   void handleSubmit() async {
@@ -33,9 +46,12 @@ class IngredientScreenViewModel extends BaseProviderModel {
         ? DateTime.now()
         : DateTime.parse(_dateController.text);
 
-    lunchDate = date.toString().split(" ").first.toString();
-    print(lunchDate);
+    // lunchDate = date.toString().split(" ").first.toString();
 
+    hintTextLunchDate = date.toString().split(" ").first.toString();
+  }
+
+  void getIngredients() async {
     chosenIngredients = [];
     setViewState(ViewState.BUSY);
 
@@ -43,7 +59,7 @@ class IngredientScreenViewModel extends BaseProviderModel {
     setViewState(ViewState.IDLE);
   }
 
-  void handleUnchanged(IngredientModel ingredient, bool value) {
+  void handleUnchanged(IngredientModel ingredient, bool value, bool isExpired) {
     if (value) {
       chosenIngredients.add(ingredient);
       print("adds ingredient");
