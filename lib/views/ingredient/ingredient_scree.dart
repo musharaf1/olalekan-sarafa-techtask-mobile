@@ -18,7 +18,8 @@ class _IngredientsScreenState extends State<IngredientsScreen> {
     return BaseViewModel<IngredientScreenViewModel>(
       providerReady: (provider) {
         provider.getIngredients();
-        provider.handleSubmit();
+        provider.handleSubmit(_dateController);
+        provider.updateDate(_dateController);
       },
       builder: (context, provider, child) {
         return Scaffold(
@@ -99,12 +100,11 @@ class _IngredientsScreenState extends State<IngredientsScreen> {
                                     .contains(ingredient),
                                 onChanged: (value) {
                                   return provider.handleUnchanged(
-                                    ingredient,
-                                    value,
-                                    !(provider.isIngredientExpired(
                                       ingredient,
-                                    )),
-                                  );
+                                      value,
+                                      provider.isIngredientExpired(ingredient,
+                                          lunchTime: provider.initialDate),
+                                      _dateController);
                                 },
                                 title: Text(
                                   ingredient.title,
