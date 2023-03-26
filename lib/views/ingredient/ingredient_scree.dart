@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tech_task/enums/ui_state_enum.dart';
+import 'package:tech_task/locator.dart';
 import 'package:tech_task/models/baseViewModel/base_view_model.dart';
 import 'package:tech_task/routes/view_routes.dart';
 import 'package:tech_task/views/ingredient/ingredent_screen_view_model.dart';
@@ -10,8 +11,15 @@ class IngredientsScreen extends StatefulWidget {
 }
 
 TextEditingController _dateController = TextEditingController();
+final provider = myLocator<IngredientScreenViewModel>();
 
 class _IngredientsScreenState extends State<IngredientsScreen> {
+  @override
+  void didChangeDependencies() {
+    provider.chosenIngredients.clear();
+    super.didChangeDependencies();
+  }
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -104,7 +112,8 @@ class _IngredientsScreenState extends State<IngredientsScreen> {
                                       value,
                                       provider.isIngredientExpired(ingredient,
                                           lunchTime: provider.initialDate),
-                                      _dateController);
+                                      _dateController,
+                                      context);
                                 },
                                 title: Text(
                                   ingredient.title,

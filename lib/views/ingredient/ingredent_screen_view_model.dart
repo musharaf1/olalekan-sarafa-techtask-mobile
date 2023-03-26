@@ -48,11 +48,16 @@ class IngredientScreenViewModel extends BaseProviderModel {
   }
 
   void handleUnchanged(IngredientModel ingredient, bool value, bool isExpired,
-      final _dateController) {
+      final _dateController, final context) {
     updateDate(_dateController);
     if (value && !isExpired) {
       chosenIngredients.add(ingredient);
     } else {
+      if (!chosenIngredients.contains(ingredient))
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text(
+              "The ${ingredient.title} is expired and cannot be selected."),
+        ));
       chosenIngredients.remove(ingredient);
     }
     notifyListeners();
