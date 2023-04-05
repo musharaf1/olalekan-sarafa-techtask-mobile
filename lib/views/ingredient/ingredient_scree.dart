@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:tech_task/enums/ui_state_enum.dart';
 import 'package:tech_task/locator.dart';
 import 'package:tech_task/models/baseViewModel/base_view_model.dart';
@@ -14,10 +15,41 @@ TextEditingController _dateController = TextEditingController();
 final provider = myLocator<IngredientScreenViewModel>();
 
 class _IngredientsScreenState extends State<IngredientsScreen> {
+  var _initialDate = "";
+
+  var _hintTextLunchDate = "";
+
+  final regex = RegExp(r'^\d{4}-\d{2}-\d{2}$');
+
+  bool isDateFormat(String input) {
+    RegExp regex = RegExp(r'^\d{4}-\d{2}-\d{2}$');
+    return regex.hasMatch(input);
+  }
+
+  updateLunchDate() {
+    // If the input is empty, set the date to today's date
+
+    if (isDateFormat(_dateController.text)) {
+      final date = _dateController.text.isEmpty
+          ? DateTime.now()
+          : DateTime.parse(_dateController.text);
+      _hintTextLunchDate = date.toString().split(" ").first.toString();
+
+      updateInitialDate();
+    }
+    return;
+  }
+
+  updateInitialDate() {
+    _initialDate = _dateController.text.isEmpty
+        ? _hintTextLunchDate
+        : _dateController.text;
+  }
+
   @override
-  void didChangeDependencies() {
-    provider.chosenIngredients.clear();
-    super.didChangeDependencies();
+  void initState() {
+    _dateController.addListener(updateLunchDate());
+    super.initState();
   }
 
   @override
@@ -27,7 +59,6 @@ class _IngredientsScreenState extends State<IngredientsScreen> {
       providerReady: (provider) {
         provider.getIngredients();
         provider.handleSubmit(_dateController);
-        provider.updateDate(_dateController);
       },
       builder: (context, provider, child) {
         return Scaffold(
@@ -73,6 +104,7 @@ class _IngredientsScreenState extends State<IngredientsScreen> {
                     Padding(
                       padding: const EdgeInsets.all(16.0),
                       child: TextFormField(
+                        onChanged: updateLunchDate(),
                         controller: _dateController,
                         decoration: InputDecoration(
                             hintStyle: TextStyle(color: Colors.grey),
@@ -108,12 +140,12 @@ class _IngredientsScreenState extends State<IngredientsScreen> {
                                     .contains(ingredient),
                                 onChanged: (value) {
                                   return provider.handleUnchanged(
-                                      ingredient,
-                                      value,
-                                      provider.isIngredientExpired(ingredient,
-                                          lunchTime: provider.initialDate),
-                                      _dateController,
-                                      context);
+                                    ingredient,
+                                    value,
+                                    provider.isIngredientExpired(ingredient,
+                                        lunchTime: _initialDate),
+                                    context,
+                                  );
                                 },
                                 title: Text(
                                   ingredient.title,

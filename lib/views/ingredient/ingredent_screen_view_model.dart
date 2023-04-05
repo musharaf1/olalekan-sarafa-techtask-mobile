@@ -16,10 +16,14 @@ class IngredientScreenViewModel extends BaseProviderModel {
   List<IngredientModel> get allIngredients => _ingredients;
 
   bool isIngredientExpired(IngredientModel ingredient, {String lunchTime}) {
+    final regex = RegExp(r'^\d{4}-\d{2}-\d{2}$');
+
+    bool _isRightFormat = regex.hasMatch(lunchTime);
+
     final now = DateTime.now();
     final useByDate = DateFormat("yyyy-MM-dd").parse(ingredient.useBy);
 
-    if (lunchTime != null) {
+    if (lunchTime != null && _isRightFormat) {
       final _lunchTime = DateFormat("yyyy-MM-dd").parse(lunchTime);
       return useByDate.isBefore(_lunchTime) ||
           useByDate.isAtSameMomentAs(_lunchTime);
@@ -47,25 +51,28 @@ class IngredientScreenViewModel extends BaseProviderModel {
     setViewState(ViewState.IDLE);
   }
 
-  void handleUnchanged(IngredientModel ingredient, bool value, bool isExpired,
-      final _dateController, final context) {
-    updateDate(_dateController);
+  void handleUnchanged(
+      IngredientModel ingredient, bool value, bool isExpired, final context) {
+    // updateDate(_dateController);
     if (value && !isExpired) {
       chosenIngredients.add(ingredient);
     } else {
       if (!chosenIngredients.contains(ingredient))
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text(
-              "The ${ingredient.title} is expired and cannot be selected."),
-        ));
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+                "The ${ingredient.title} is expired and cannot be selected."),
+            duration: Duration(milliseconds: 500),
+          ),
+        );
       chosenIngredients.remove(ingredient);
     }
     notifyListeners();
   }
 
-  var initialDate = '';
-  updateDate(TextEditingController _dateController) {
-    initialDate =
-        _dateController.text.isEmpty ? hintTextLunchDate : _dateController.text;
-  }
+  // var initialDate = '';
+  // updateDate(TextEditingController _dateController) {
+  //   initialDate =
+  //       _dateController.text.isEmpty ? hintTextLunchDate : _dateController.text;
+  // }
 }
