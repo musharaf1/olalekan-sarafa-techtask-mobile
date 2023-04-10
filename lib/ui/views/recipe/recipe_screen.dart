@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:tech_task/enums/ui_state_enum.dart';
+import 'package:tech_task/core/enums/ui_state_enum.dart';
 import 'package:tech_task/locator.dart';
-import 'package:tech_task/models/baseViewModel/base_view_model.dart';
-import 'package:tech_task/models/ingredientModel/ingredients_model.dart';
-import 'package:tech_task/views/recipe/recipe_screen-view_model.dart';
-import '../../models/recipeModel/recipe_model.dart';
+import 'package:tech_task/core/models/baseViewModel/base_view_model.dart';
+import 'package:tech_task/core/models/ingredientModel/ingredients_model.dart';
+import 'package:tech_task/ui/views/recipe/recipe_screen-view_model.dart';
+import '../../../core/models/recipeModel/recipe_model.dart';
 import '../ingredient/ingredent_screen_view_model.dart';
 
 class RecipeScreen extends StatefulWidget {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tech_task/locator.dart';
-import 'package:tech_task/routes/routes.dart' as router;
-import 'package:tech_task/routes/view_routes.dart';
+import 'package:tech_task/core/routes/routes.dart' as router;
+import 'package:tech_task/core/routes/view_routes.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();

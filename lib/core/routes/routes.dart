@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:tech_task/models/ingredientModel/ingredients_model.dart';
-import 'package:tech_task/routes/view_routes.dart';
-import 'package:tech_task/views/ingredient/ingredient_scree.dart';
-import 'package:tech_task/views/splash/splash_screen.dart';
-
-import '../views/recipe/recipe_screen.dart';
+import 'package:tech_task/core/models/ingredientModel/ingredients_model.dart';
+import 'package:tech_task/core/routes/view_routes.dart';
+import 'package:tech_task/ui/views/ingredient/ingredient_scree.dart';
+import 'package:tech_task/ui/views/splash/splash_screen.dart';
+import '../../ui/views/recipe/recipe_screen.dart';
 
 class Router {
   static Route<dynamic> generateRoute(RouteSettings settings) {

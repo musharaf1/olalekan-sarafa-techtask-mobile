@@ -1,8 +1,8 @@
-import 'package:tech_task/enums/ui_state_enum.dart';
-import 'package:tech_task/models/baseProviderModel/base_provider_model.dart';
+import 'package:tech_task/core/enums/ui_state_enum.dart';
+import 'package:tech_task/core/models/baseProviderModel/base_provider_model.dart';
 import 'package:dio/dio.dart';
-import 'package:tech_task/models/ingredientModel/ingredients_model.dart';
-import 'package:tech_task/models/recipeModel/recipe_model.dart';
+import 'package:tech_task/core/models/ingredientModel/ingredients_model.dart';
+import 'package:tech_task/core/models/recipeModel/recipe_model.dart';
 
 class ApiClient extends BaseProviderModel {
   final String baseUrl =
