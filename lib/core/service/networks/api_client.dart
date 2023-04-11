@@ -16,10 +16,8 @@ class ApiClient extends BaseProviderModel {
     print(_queryParams);
 
     try {
-      setViewState(ViewState.BUSY);
       final response =
           await Dio().get('$baseUrl/recipes', queryParameters: _queryParams);
-      setViewState(ViewState.IDLE);
 
       if (response.statusCode == 200) {
         final List<dynamic> data = response.data;
@@ -40,7 +38,6 @@ class ApiClient extends BaseProviderModel {
   Future<List<IngredientModel>> getIngredients() async {
     try {
       final response = await Dio().get('$baseUrl/ingredients');
-      setViewState(ViewState.IDLE);
 
       if (response.statusCode == 200) {
         final List<dynamic> data = response.data;
