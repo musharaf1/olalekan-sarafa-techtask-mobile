@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:tech_task/enums/ui_state_enum.dart';
+import 'package:tech_task/core/enums/ui_state_enum.dart';
 import 'package:tech_task/locator.dart';
-import 'package:tech_task/models/baseViewModel/base_view_model.dart';
-import 'package:tech_task/routes/view_routes.dart';
-import 'package:tech_task/views/ingredient/ingredent_screen_view_model.dart';
+import 'package:tech_task/core/models/baseViewModel/base_view_model.dart';
+import 'package:tech_task/core/routes/view_routes.dart';
+import 'package:tech_task/ui/views/ingredient/ingredent_screen_view_model.dart';
 
 class IngredientsScreen extends StatefulWidget {
   @override

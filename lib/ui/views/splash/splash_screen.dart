@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:tech_task/views/splash/splash_screen_view_model.dart';
+import 'package:tech_task/ui/views/splash/splash_screen_view_model.dart';
 
-import '../../models/baseViewModel/base_view_model.dart';
+import '../../../core/models/baseViewModel/base_view_model.dart';
 
 class SplashScreen extends StatelessWidget {
   @override

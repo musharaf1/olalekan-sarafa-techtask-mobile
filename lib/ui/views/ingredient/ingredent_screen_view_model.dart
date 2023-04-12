@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:tech_task/locator.dart';
-import 'package:tech_task/models/ingredientModel/ingredients_model.dart';
-import 'package:tech_task/service/networks/api_client.dart';
-import '../../enums/ui_state_enum.dart';
-import '../../models/baseProviderModel/base_provider_model.dart';
+import 'package:tech_task/core/models/ingredientModel/ingredients_model.dart';
+import 'package:tech_task/core/service/networks/api_client.dart';
+import '../../../core/enums/ui_state_enum.dart';
+import '../../../core/models/baseProviderModel/base_provider_model.dart';
 
 class IngredientScreenViewModel extends BaseProviderModel {
   final _apiClient = myLocator<ApiClient>();
